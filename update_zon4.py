@@ -34,7 +34,8 @@ if __name__ == "__main__":
                 repo_name = paths[3]
                 if paths[-1].startswith("v"):
                     paths[-1] = paths[-1][1:]
-                paths[-1] = f"{repo_name}-{paths[-1]}"
+                if repo_name not in paths[-1]:
+                    paths[-1] = f"{repo_name}-{paths[-1]}"
 
                 d = "/".join(paths)
                 lines.append(line.replace(content, d))
