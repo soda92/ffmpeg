@@ -25,7 +25,8 @@ def update_zon(file: Path):
         p.parent.mkdir(parents=True, exist_ok=True)
         # print(p)
 
-        subprocess.run(["wget", i, "-O", str(p)], check=True)
+        if not p.exists():
+            subprocess.run(["wget", i, "-O", str(p)], check=True)
         unpack(str(p), target_dir)
 
 

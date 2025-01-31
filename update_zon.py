@@ -16,7 +16,8 @@ for i in urls:
     p.parent.mkdir(parents=True, exist_ok=True)
     # print(p)
 
-    subprocess.run(["wget", i, "-O", str(p)], check=True)
+    if not p.exists():
+        subprocess.run(["wget", i, "-O", str(p)], check=True)
 
 CURRENT = Path(__file__).resolve().parent
 
