@@ -38,16 +38,10 @@ if __name__ == "__main__":
                     paths[-1] = f"{repo_name}-{paths[-1]}"
 
                 d = "/".join(paths)
-
-                line = line.replace(content, d)
+                lines.append(line.replace(content, d))
 
                 if not Path(d).exists():
                     print(file, content, d)
-
-            # handle relative path
-            content = re.findall(r'"(.*)"', line)[0]
-            relative_path = str(Path(content).relative_to(file)).replace("\\", "/")
-            line = line.replace(content, relative_path)
-
-            lines.append(line)
+            else:
+                lines.append(line)
         file.write_text("\n".join(lines), encoding="utf8")

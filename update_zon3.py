@@ -45,8 +45,7 @@ if __name__ == "__main__":
                         subprocess.run(["git", "checkout", hash])
 
                 line = line.replace(".url", ".path")
-                relative_path = target_dir.relative_to(file)
-                line = line.replace(repo, relative_path)
+                line = line.replace(repo, url.replace("https://", "unzip/"))
                 line = line.replace("git+", "")
 
             lines.append(line)
