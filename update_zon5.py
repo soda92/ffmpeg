@@ -4,6 +4,7 @@ from pathlib import Path
 def replace(s):
     s0, s1, s2 = s.split()
     c = Path(s0).read_text(encoding="utf8")
+    s2 = Path(s2).relative_to(Path(s0)).replace("\\", "/")
     c = c.replace(s1, s2)
     Path(s0).write_text(c, encoding="utf8")
 
