@@ -3,7 +3,8 @@ from pathlib import Path
 import send2trash
 
 if Path("tmp").exists():
-    send2trash.send2trash("tmp")
+    # send2trash.send2trash("tmp")
+    pass
 if Path("unzip").exists():
     send2trash.send2trash("unzip")
 subprocess.run(["git", "restore", "build.zig.zon"])
