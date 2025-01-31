@@ -843,10 +843,7 @@ pub fn build(b: *std.Build) void {
     };
 
     @setEvalBranchQuota(2500);
-    const config_asm = b.addConfigHeader(.{
-        .style = .nasm,
-        .include_path = "config.asm",
-    }, common_config);
+
 
     const config_h = b.addConfigHeader(.{
         .style = .blank,
@@ -3129,40 +3126,7 @@ pub fn build(b: *std.Build) void {
     });
     switch (t.cpu.arch) {
         .x86_64, .x86 => {
-            // For x86 there is one additional complication which is compiling .asm
-            // files into object files with NASM.
-            const nasm_dep = b.dependency("nasm", .{
-                .optimize = .ReleaseFast,
-            });
-            const nasm_exe = nasm_dep.artifact("nasm");
-
-            for (all_sources) |input_file| {
-                if (!std.mem.endsWith(u8, input_file, ".asm")) continue;
-
-                const output_basename = basenameNewExtension(b, input_file, ".o");
-                const nasm_run = b.addRunArtifact(nasm_exe);
-
-                // nasm requires a trailing slash on include directories
-                const include_dir = b.fmt("-I{s}/", .{std.fs.path.dirname(input_file).?});
-
-                nasm_run.addArgs(&.{
-                    "-f",
-                    "elf64",
-                    "-g",
-                    "-F",
-                    "dwarf",
-                    "-I./",
-                    include_dir,
-                });
-
-                nasm_run.addArgs(&.{"--include"});
-                nasm_run.addFileArg(config_asm.getOutput());
-
-                nasm_run.addArgs(&.{"-o"});
-                lib.addObjectFile(nasm_run.addOutputFileArg(output_basename));
-
-                nasm_run.addFileArg(b.path(input_file));
-            }
+         
         },
         else => {},
     }
