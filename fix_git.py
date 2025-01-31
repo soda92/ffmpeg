@@ -44,8 +44,12 @@ if __name__ == "__main__":
                     with CD(target_dir):
                         subprocess.run(["git", "checkout", hash])
 
-                line = line.replace('.url', '.path')
-                line = line.replace(repo, url.replace("git+https://", "unzip/"))
+                line = line.replace(".url", ".path")
+                line = line.replace(repo, url.replace("https://", "unzip/"))
+                line = line.replace("git+", "")
 
             lines.append(line)
-        file.write_text('\n'.join(lines), encoding='utf8')
+        content=  "\n".join(lines)
+        content = "\n".join(filter(lambda x: ".hash" not in x, content.split("\n")))
+
+        file.write_text(content, encoding="utf8")
