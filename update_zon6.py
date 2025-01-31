@@ -31,6 +31,7 @@ if __name__ == "__main__":
                 line = line.replace("defineCMacro", "root_module.addCMacro")
                 line = line.replace("null", '""')
                 line = line.replace("libressl_common.root_module", "libressl_common.libcrypto.root_module")
+                line = line.replace("value: ?[]const u8) void", "value: []const u8) void")
                 lines.append(line)
             else:
                 lines.append(line)
