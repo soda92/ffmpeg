@@ -49,7 +49,12 @@ if __name__ == "__main__":
                 line = line.replace("git+", "")
 
             lines.append(line)
-        content=  "\n".join(lines)
+        content = "\n".join(lines)
         content = "\n".join(filter(lambda x: ".hash" not in x, content.split("\n")))
+
+        content = content.replace(
+            'selftest.defineCMacro("MBEDTLS_SELF_TEST", null);',
+            'selftest.root_module.addCMacro("MBEDTLS_SELF_TEST", "");',
+        )
 
         file.write_text(content, encoding="utf8")
