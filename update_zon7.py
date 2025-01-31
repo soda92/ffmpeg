@@ -27,8 +27,8 @@ if __name__ == "__main__":
                 content = re.findall(r'"(.*)"', line)[0]
                 print(content)
 
-                content2 = content[content.index("unzip/github.com"):]
-                levels = str(file).count("\\")
+                content2 = content[content.index("unzip/github.com") :]
+                levels = str(file).replace("\\", "/").count("/")
                 c2 = "../" * levels + content2
                 line = line.replace(content, c2)
 
